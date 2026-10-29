@@ -1,0 +1,133 @@
+# ═════════════════════════════════════════════════════════════
+#  VEILLE D'OFFRES — RÉGLAGES ET PAGES SURVEILLÉES
+#  Ce fichier se modifie directement sur GitHub (icône crayon).
+# ═════════════════════════════════════════════════════════════
+
+reglages:
+  modele: claude-haiku-5-5        # modèle Claude qui trie les offres
+  score_minimum: 70               # en dessous de ce score (sur 100), pas d'alerte
+  premier_passage_resume: true    # au 1er passage d'une source, t'envoie les offres pertinentes déjà en ligne
+  max_alertes_par_passage: 15     # au-delà, les offres restantes arrivent dans un seul message
+
+# ─────────────────────────────────────────────────────────────
+#  Pages surveillées
+#  • Ajouter une page : copie un bloc, change « nom » et « url ».
+#  • Mettre une page en pause : actif: false
+#  • « contexte » aide Claude quand la page n'indique pas le lieu.
+#  • « attente » (facultatif) : secondes de plus si la page est lente à charger.
+#  • Le mieux pour un site d'emploi : fais ta recherche sur le site,
+#    trie par date (« les plus récentes »), puis colle l'adresse ici.
+# ─────────────────────────────────────────────────────────────
+
+sources:
+
+  # ── LinkedIn : offres des dernières 24 h, triées par date
+  - nom: LinkedIn – Londres
+    url: https://www.linkedin.com/jobs/search/?keywords=%28%22investor%20relations%22%20OR%20%22product%20specialist%22%20OR%20RFP%20OR%20%22bid%20manager%22%20OR%20%22client%20onboarding%22%20OR%20%22business%20development%22%20OR%20%22chief%20of%20staff%22%29%20AND%20%28%22asset%20management%22%20OR%20%22wealth%20management%22%20OR%20%22private%20bank%22%20OR%20%22private%20equity%22%20OR%20%22private%20markets%22%29&location=London%2C%20England%2C%20United%20Kingdom&f_TPR=r86400&sortBy=DD
+    contexte: Londres
+
+  - nom: LinkedIn – Genève
+    url: https://www.linkedin.com/jobs/search/?keywords=%28%22investor%20relations%22%20OR%20%22product%20specialist%22%20OR%20RFP%20OR%20%22bid%20manager%22%20OR%20%22client%20onboarding%22%20OR%20%22business%20development%22%20OR%20%22chief%20of%20staff%22%29%20AND%20%28%22asset%20management%22%20OR%20%22wealth%20management%22%20OR%20%22private%20bank%22%20OR%20%22private%20equity%22%20OR%20%22private%20markets%22%29&location=Geneva%2C%20Switzerland&f_TPR=r86400&sortBy=DD
+    contexte: Genève
+
+  - nom: LinkedIn – Zurich
+    url: https://www.linkedin.com/jobs/search/?keywords=%28%22investor%20relations%22%20OR%20%22product%20specialist%22%20OR%20RFP%20OR%20%22bid%20manager%22%20OR%20%22client%20onboarding%22%20OR%20%22business%20development%22%20OR%20%22chief%20of%20staff%22%29%20AND%20%28%22asset%20management%22%20OR%20%22wealth%20management%22%20OR%20%22private%20bank%22%20OR%20%22private%20equity%22%20OR%20%22private%20markets%22%29&location=Zurich%2C%20Switzerland&f_TPR=r86400&sortBy=DD
+    contexte: Zurich
+
+  - nom: LinkedIn – Paris
+    url: https://www.linkedin.com/jobs/search/?keywords=%28%22investor%20relations%22%20OR%20%22product%20specialist%22%20OR%20RFP%20OR%20%22bid%20manager%22%20OR%20%22client%20onboarding%22%20OR%20%22business%20development%22%20OR%20%22chief%20of%20staff%22%29%20AND%20%28%22asset%20management%22%20OR%20%22wealth%20management%22%20OR%20%22private%20bank%22%20OR%20%22private%20equity%22%20OR%20%22private%20markets%22%29&location=Paris%2C%20%C3%8Ele-de-France%2C%20France&f_TPR=r86400&sortBy=DD
+    contexte: Paris
+
+  # ── eFinancialCareers (à remplacer par ta propre recherche triée par date)
+  - nom: eFinancialCareers – Londres
+    url: https://www.efinancialcareers.co.uk/jobs?q=asset%20management&location=London
+    contexte: Londres
+
+  - nom: eFinancialCareers – Genève
+    url: https://www.efinancialcareers.ch/jobs?q=asset%20management&location=Geneva
+    contexte: Genève
+
+  - nom: eFinancialCareers – Zurich
+    url: https://www.efinancialcareers.ch/jobs?q=asset%20management&location=Zurich
+    contexte: Zurich
+
+  - nom: eFinancialCareers – Paris
+    url: https://www.efinancialcareers.fr/jobs?q=asset%20management&location=Paris
+    contexte: Paris
+
+  # ── Maisons cibles en Suisse, via jobs.ch (en attendant les adresses de leurs propres pages carrières)
+  - nom: Pictet (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Pictet
+    contexte: Suisse
+
+  - nom: Lombard Odier (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Lombard%20Odier
+    contexte: Suisse
+
+  - nom: Union Bancaire Privée (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Union%20Bancaire%20Priv%C3%A9e
+    contexte: Suisse
+
+  - nom: Mirabaud (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Mirabaud
+    contexte: Suisse
+
+  - nom: Edmond de Rothschild (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Edmond%20de%20Rothschild
+    contexte: Suisse
+
+  - nom: Syz (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Syz
+    contexte: Suisse
+
+  - nom: REYL (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=REYL
+    contexte: Suisse
+
+  - nom: Bordier (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Bordier
+    contexte: Suisse
+
+  - nom: Gonet (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Gonet
+    contexte: Suisse
+
+  - nom: BCGE (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=BCGE
+    contexte: Suisse
+
+  - nom: UBS (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=UBS
+    contexte: Suisse
+
+  - nom: Julius Baer (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Julius%20Baer
+    contexte: Suisse
+
+  - nom: Safra Sarasin (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Safra%20Sarasin
+    contexte: Suisse
+
+  - nom: EFG (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=EFG
+    contexte: Suisse
+
+  - nom: Vontobel (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Vontobel
+    contexte: Suisse
+
+  - nom: Capital Group (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Capital%20Group
+    contexte: Suisse
+
+  - nom: Unigestion (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Unigestion
+    contexte: Suisse
+
+  - nom: Partners Group (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=Partners%20Group
+    contexte: Suisse
+
+  - nom: HSBC (jobs.ch)
+    url: https://www.jobs.ch/en/vacancies/?term=HSBC
+    contexte: Suisse
