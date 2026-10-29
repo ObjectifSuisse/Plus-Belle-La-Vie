@@ -1,0 +1,64 @@
+name: Veille offres
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"   # toutes les 15 minutes (GitHub peut prendre quelques minutes de retard)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "test = vérifier Telegram et Claude ; normal = lancer la veille"
+        type: choice
+        options: [normal, test]
+        default: normal
+
+permissions:
+  contents: write
+
+concurrency:
+  group: veille
+  cancel-in-progress: false
+
+jobs:
+  veille:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les bibliothèques
+        run: pip install -r requirements.txt
+
+      - name: Garder le navigateur en cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Installer le navigateur
+        run: python -m playwright install --with-deps chromium
+
+      - name: Lancer la veille
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PROFIL: ${{ secrets.PROFIL }}
+          MODE: ${{ github.event.inputs.mode || 'normal' }}
+        run: python watcher.py
+
+      - name: Enregistrer les offres déjà vues
+        if: always()
+        run: |
+          git config user.name "veille-bot"
+          git config user.email "veille-bot@users.noreply.github.com"
+          git add state/
+          if ! git diff --cached --quiet; then
+            git commit -m "Mise à jour des offres vues"
+            git pull --rebase
+            git push
+          fi
